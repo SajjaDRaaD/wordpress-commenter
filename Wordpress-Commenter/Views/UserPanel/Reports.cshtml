@@ -1,0 +1,140 @@
+﻿@model ClientApp.Models.User.ReportsVM
+
+@{
+    ViewData["Title"] = "گزارشات ارسال";
+    Layout = "~/Views/Shared/Dashboard/_UserLayout.cshtml";
+
+    var count = 1;
+
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title sans-bold-fa">گزارشات ارسال</span>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="reports-tbl" class="table table-row-bordered gy-5">
+                            <thead>
+                                <tr class="fw-bold fs-6 text-muted text-center sans-bold-fa">
+                                    <th>#</th>
+                                    <th>شناسه ارسال</th>
+                                    <th>وبسایت مقصد</th>
+                                    <th>بازه ارسال</th>
+                                    <th>زمان ارسال</th>
+                                    <th>وضعیت</th>
+                                    <th>عملیات</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.SendRequests)
+                                {
+                                    <tr class="text-center align-middle">
+                                        <td>@count</td>
+                                        <td>@item.Id</td>
+                                        <td><a href="@item.config.WebsiteInfo.Url" target="_blank">@item.config.WebsiteInfo.Name</a></td>
+                                        <td>
+                                            @switch (item.config.Period)
+                                            {
+                                                case "hourly":
+                                                    <strong>ساعتی</strong>
+                                                    break;
+                                                case "daily":
+                                                    <strong>روزانه</strong>
+                                                    break;
+                                                case "weekly":
+                                                    <strong>هفتگی</strong>
+                                                    break;
+                                            }
+                                        </td>
+                                        <td>
+                                            @switch (item.config.Period)
+                                            {
+                                                case "hourly":
+                                                    <strong>
+                                                        دقیقه : @item.config.HourlyMinute
+                                                    </strong>
+                                                    break;
+                                                case "daily":
+                                                    <strong>
+                                                        ساعت : @item.config.DailyHour
+                                                        ,
+                                                        دقیقه : @item.config.DailyMinute
+                                                    </strong>
+                                                    break;
+                                                case "weekly":
+                                                    <strong>
+                                                        روز : @switch (item.config.WeeklyDOW)
+                                                          {
+                                                            case "SAT":
+                                                                <bold>شنبه</bold>
+                                                                break;
+                                                            case "SUN":
+                                                                <bold>یکشنبه</bold>
+                                                                break;
+                                                            case "MON":
+                                                                <bold>دو شنبه</bold>
+                                                                break;
+                                                            case "TUE":
+                                                                <bold>سه شنبه</bold>
+                                                                break;
+                                                            case "WED":
+                                                                <bold>جهار شنبه</bold>
+                                                                break;
+                                                            case "THU":
+                                                                <bold>پنج شنبه</bold>
+                                                                break;
+                                                            case "FRI":
+                                                                <bold>جمعه</bold>
+                                                                break;
+                                                        }
+                                                        ,
+                                                        ساعت : @item.config.WeeklyHour
+                                                        ,
+                                                        دقیقه : @item.config.WeeklyMinute
+                                                    </strong>
+                                                    break;
+                                            } 
+                                        </td>
+                                        <td>@if (item.Status == "Finished")
+                                            {
+                                                <span class="badge badge-success">پایان یافته</span>
+
+                                            }
+                                            else if (item.Status == "Running")
+                                            {
+                                                <span class="badge badge-warning">در حال اجرا</span>
+                                            }
+                                        </td>
+                                        <td>
+                                            <a href="#" class="btn p-0 delete-group" data-bs-toggle="tooltip" data-bs-placement="bottom" data-id="@item.Id" title="حذف">
+                                                <span class="svg-icon svg-icon-danger svg-icon-2x">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                            <rect x="0" y="0" width="24" height="24" />
+                                                            <path d="M6,8 L18,8 L17.106535,19.6150447 C17.04642,20.3965405 16.3947578,21 15.6109533,21 L8.38904671,21 C7.60524225,21 6.95358004,20.3965405 6.89346498,19.6150447 L6,8 Z M8,10 L8.45438229,14.0894406 L15.5517885,14.0339036 L16,10 L8,10 Z" fill="#000000" fill-rule="nonzero" />
+                                                            <path d="M14,4.5 L14,3.5 C14,3.22385763 13.7761424,3 13.5,3 L10.5,3 C10.2238576,3 10,3.22385763 10,3.5 L10,4.5 L5.5,4.5 C5.22385763,4.5 5,4.72385763 5,5 L5,5.5 C5,5.77614237 5.22385763,6 5.5,6 L18.5,6 C18.7761424,6 19,5.77614237 19,5.5 L19,5 C19,4.72385763 18.7761424,4.5 18.5,4.5 L14,4.5 Z" fill="#000000" opacity="0.3" />
+                                                        </g>
+                                                    </svg>
+                                                </span>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    count++;
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/assets/plugins/custom/datatables/datatables.bundle.js"></script>
+    <script src="~/assets/js/views/user-panel/reports.js"></script>
+}

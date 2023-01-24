@@ -1,0 +1,403 @@
+﻿@model ClientApp.Models.User.ReviewVm
+@{
+    ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/Dashboard/_UserLayout.cshtml";
+    var reviewCounts = 1;
+    var commentCounts = 1;
+
+    var reviewGroups = Model.Groups
+                                .Select((x) => new { item = x })
+                                .Where((x) => x.item.Type == "فروشگاهی")
+                                .Select((x) => x.item);
+    var commentGroups = Model.Groups
+                                .Select((x) => new { item = x })
+                                .Where((x) => x.item.Type == "بلاگ")
+                                .Select((x) => x.item);
+}
+
+@if ((string)TempData["message"] == "success")
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <!--begin::Alert-->
+                <div class="alert alert-dismissible bg-success d-flex flex-column flex-sm-row p-5 mb-10">
+                    <!--begin::Icon-->
+                    <span class="svg-icon svg-icon-2hx svg-icon-light me-4 mb-5 mb-sm-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                <rect x="0" y="0" width="24" height="24" />
+                                <path d="M4,4 L11.6314229,2.5691082 C11.8750185,2.52343403 12.1249815,2.52343403 12.3685771,2.5691082 L20,4 L20,13.2830094 C20,16.2173861 18.4883464,18.9447835 16,20.5 L12.5299989,22.6687507 C12.2057287,22.8714196 11.7942713,22.8714196 11.4700011,22.6687507 L8,20.5 C5.51165358,18.9447835 4,16.2173861 4,13.2830094 L4,4 Z" fill="#000000" opacity="0.3" />
+                                <path d="M11.1750002,14.75 C10.9354169,14.75 10.6958335,14.6541667 10.5041669,14.4625 L8.58750019,12.5458333 C8.20416686,12.1625 8.20416686,11.5875 8.58750019,11.2041667 C8.97083352,10.8208333 9.59375019,10.8208333 9.92916686,11.2041667 L11.1750002,12.45 L14.3375002,9.2875 C14.7208335,8.90416667 15.2958335,8.90416667 15.6791669,9.2875 C16.0625002,9.67083333 16.0625002,10.2458333 15.6791669,10.6291667 L11.8458335,14.4625 C11.6541669,14.6541667 11.4145835,14.75 11.1750002,14.75 Z" fill="#000000" />
+                            </g>
+                        </svg>
+                    </span>
+                    <!--end::Icon-->
+                    <!--begin::Wrapper-->
+                    <div class="d-flex flex-column text-light pe-0 pe-sm-10">
+                        <!--begin::Title-->
+                        <h4 class="mb-1 text-light">عملیات با موفقیت انجام شد.</h4>
+                        <!--end::Title-->
+                        <!--begin::Content-->
+                        <span>کامنت مورد نظر با موفقیت ثبت شد.</span>
+
+                        <!--end::Content-->
+                    </div>
+                    <!--end::Wrapper-->
+                    <!--begin::Close-->
+                    <button type="button" class="position-absolute position-sm-relative m-2 m-sm-0 top-0 end-0 btn btn-icon ms-sm-auto" data-bs-dismiss="alert">
+                        <span class="svg-icon svg-icon-2x svg-icon-light">
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                    <g transform="translate(12.000000, 12.000000) rotate(-45.000000) translate(-12.000000, -12.000000) translate(4.000000, 4.000000)" fill="#000000">
+                                        <rect x="0" y="7" width="16" height="2" rx="1" />
+                                        <rect opacity="0.3" transform="translate(8.000000, 8.000000) rotate(-270.000000) translate(-8.000000, -8.000000) " x="0" y="7" width="16" height="2" rx="1" />
+                                    </g>
+                                </g>
+                            </svg>
+                        </span>
+                    </button>
+                    <!--end::Close-->
+                </div>
+                <!--end::Alert-->
+            </div>
+        </div>
+    </div>
+}
+
+<div class="container-fluid">
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title sans-bold-fa">افزودن کامنت</span>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex flex-column flex-md-row rounded border p-10">
+                        <ul class="nav nav-tabs nav-pills flex-row border-0 flex-md-column me-5 mb-3 mb-md-0 fs-6 justify-content-center">
+                            <li class="nav-item me-0 mb-md-2">
+                                <a class="nav-link btn btn-flex btn-active-light-success active" data-bs-toggle="tab" href="#new-review-tab">
+                                    <span class="svg-icon svg-icon-primary svg-icon-2x">
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                <rect x="0" y="0" width="24" height="24" />
+                                                <path d="M14,9 L14,8 C14,6.8954305 13.1045695,6 12,6 C10.8954305,6 10,6.8954305 10,8 L10,9 L8,9 L8,8 C8,5.790861 9.790861,4 12,4 C14.209139,4 16,5.790861 16,8 L16,9 L14,9 Z M14,9 L14,8 C14,6.8954305 13.1045695,6 12,6 C10.8954305,6 10,6.8954305 10,8 L10,9 L8,9 L8,8 C8,5.790861 9.790861,4 12,4 C14.209139,4 16,5.790861 16,8 L16,9 L14,9 Z" fill="#000000" fill-rule="nonzero" opacity="0.3" />
+                                                <path d="M6.84712709,9 L17.1528729,9 C17.6417121,9 18.0589022,9.35341304 18.1392668,9.83560101 L19.611867,18.671202 C19.7934571,19.7607427 19.0574178,20.7911977 17.9678771,20.9727878 C17.8592143,20.9908983 17.7492409,21 17.6390792,21 L6.36092084,21 C5.25635134,21 4.36092084,20.1045695 4.36092084,19 C4.36092084,18.8898383 4.37002252,18.7798649 4.388133,18.671202 L5.86073316,9.83560101 C5.94109783,9.35341304 6.35828794,9 6.84712709,9 Z" fill="#000000" />
+                                            </g>
+                                        </svg>
+                                    </span>
+                                    <span class="d-flex flex-column align-items-start">
+                                        <span class="fs-4 fw-bolder">فروشگاهی</span>
+                                        <span class="fs-7">ووکامرس</span>
+                                    </span>
+                                </a>
+                            </li>
+                            <li class="nav-item me-0 mb-md-2">
+                                <a class="nav-link btn btn-flex btn-active-light-info w-100" data-bs-toggle="tab" href="#new-comment-tab">
+                                    <span class="svg-icon svg-icon-primary svg-icon-2x">
+                                        <span class="svg-icon svg-icon-primary svg-icon-2x">
+                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                    <rect x="0" y="0" width="24" height="24" />
+                                                    <rect fill="#000000" x="4" y="5" width="16" height="3" rx="1.5" />
+                                                    <path d="M5.5,15 L18.5,15 C19.3284271,15 20,15.6715729 20,16.5 C20,17.3284271 19.3284271,18 18.5,18 L5.5,18 C4.67157288,18 4,17.3284271 4,16.5 C4,15.6715729 4.67157288,15 5.5,15 Z M5.5,10 L12.5,10 C13.3284271,10 14,10.6715729 14,11.5 C14,12.3284271 13.3284271,13 12.5,13 L5.5,13 C4.67157288,13 4,12.3284271 4,11.5 C4,10.6715729 4.67157288,10 5.5,10 Z" fill="#000000" opacity="0.3" />
+                                                </g>
+                                            </svg>
+                                        </span>
+                                    </span>
+                                    <span class="d-flex flex-column align-items-start">
+                                        <span class="fs-4 fw-bolder">بلاگ</span>
+                                        <span class="fs-7">وردپرس</span>
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="tab-content flex-grow-1" id="myTabContent">
+                            <div class="tab-pane fade active show" id="new-review-tab" role="tabpanel">
+                                <form asp-controller="UserPanel" asp-action="AddReview" method="post" id="reviewForm">
+                                    <div class="row mb-3">
+                                        <div class="col-4 fv-row">
+                                            <label for="review-author" class="required form-label">نام نویسنده</label>
+                                            <input type="text" class="form-control" placeholder="نام نویسنده" asp-for="@Model.Review.Author" />
+                                        </div>
+                                        <div class="col-4 fv-row">
+                                            <label for="review-group" class="required form-label">گروه کامنت</label>
+                                            <select class="form-select" asp-for="@Model.Review.CommentGroupId" aria-label="گروه کامنت">
+                                                <option selected disabled value="">انتخاب کنید</option>
+                                                @foreach (var group in reviewGroups)
+                                                {
+                                                    <option value="@group.Id">@group.Name</option>
+                                                }
+                                            </select>
+                                        </div>
+                                        <div class="col-4 fv-row">
+                                            <label for="review-score" class="required form-label">امتیاز محصول</label>
+                                            <select class="form-select" asp-for="@Model.Review.Rating" aria-label="امتیاز محصول">
+                                                <option selected disabled value="">انتخاب کنید</option>
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 fv-row">
+                                            <label for="review-body" class="required form-label">متن کامنت</label>
+                                            <textarea class="form-control" asp-for="@Model.Review.Body" placeholder="متن کامنت ..."></textarea>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-success mt-3">افزودن</button>
+                                </form>
+                            </div>
+                            <div class="tab-pane fade" id="new-comment-tab" role="tabpanel">
+                                <form asp-controller="UserPanel" asp-action="AddComment" method="post" id="commentForm">
+                                    <div class="row">
+                                        <div class="col-6 fv-row">
+                                            <label for="comment-author" class="required form-label">نام نویسنده</label>
+                                            <input type="text" class="form-control mb-3" placeholder="نام نویسنده" asp-for="@Model.Comment.Author" />
+                                        </div>
+                                        <div class="col-6 fv-row">
+                                            <label for="comment-group" class="required form-label">گروه کامنت</label>
+                                            <select class="form-select" asp-for="@Model.Comment.CommentGroupId" aria-label="گروه کامنت">
+                                                <option selected disabled value="">انتخاب کنید</option>
+                                                @foreach (var group in commentGroups)
+                                                {
+                                                    <option value="@group.Id">@group.Name</option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 fv-row">
+                                            <label for="comment-body" class="required form-label">متن کامنت</label>
+                                            <textarea class="form-control mb-3" asp-for="@Model.Comment.Body" placeholder="متن کامنت ..."></textarea>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-success">افزودن</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+@*    <div class="row">
+        <div class="col-12">
+            <div class="card ">
+                <div class="card-header card-header-stretch">
+                    <h3 class="card-title">لیست کامنت ها</h3>
+                    <div class="card-toolbar">
+                        <ul class="nav nav-tabs nav-line-tabs nav-stretch fs-6 border-0">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-bs-toggle="tab" href="#review-list-tab">فروشگاهی</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="tab" href="#comment-list-tab">بلاگ</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="review-list-tab" role="tabpanel">
+                            <div class="d-flex align-items-center position-relative mb-5">
+                                <span class="svg-icon svg-icon-1 position-absolute ms-4">
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                            <rect x="0" y="0" width="24" height="24" />
+                                            <path d="M14.2928932,16.7071068 C13.9023689,16.3165825 13.9023689,15.6834175 14.2928932,15.2928932 C14.6834175,14.9023689 15.3165825,14.9023689 15.7071068,15.2928932 L19.7071068,19.2928932 C20.0976311,19.6834175 20.0976311,20.3165825 19.7071068,20.7071068 C19.3165825,21.0976311 18.6834175,21.0976311 18.2928932,20.7071068 L14.2928932,16.7071068 Z" fill="#000000" fill-rule="nonzero" opacity="0.3" />
+                                            <path d="M11,16 C13.7614237,16 16,13.7614237 16,11 C16,8.23857625 13.7614237,6 11,6 C8.23857625,6 6,8.23857625 6,11 C6,13.7614237 8.23857625,16 11,16 Z M11,18 C7.13400675,18 4,14.8659932 4,11 C4,7.13400675 7.13400675,4 11,4 C14.8659932,4 18,7.13400675 18,11 C18,14.8659932 14.8659932,18 11,18 Z" fill="#000000" fill-rule="nonzero" />
+                                        </g>
+                                    </svg>
+                                </span>
+                                <input type="text" data-kt-filter="review-search" class="form-control form-control-solid w-100 ps-14" placeholder="جستجوی کامنت ..." />
+                            </div>
+                            <table id="reviews-tbl" class="table table-striped table-row-bordered gy-5 gs-7 border rounded">
+                                <thead>
+                                    <tr class="fw-bolder fs-6 text-gray-800 px-7 text-center">
+                                        <th>#</th>
+                                        <th>نام نویسنده</th>
+                                        <th>گروه کامنت</th>
+                                        <th>امتیاز محصول</th>
+                                        <th>عملیات</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var review in Model.Reviews)
+                                    {
+                                        <tr class="text-center">
+                                            <td>@reviewCounts</td>
+                                            <td>@review.Author</td>
+                                            <td>@reviewGroups.Select(x => new { item = x }).Where(x => x.item.Id == review.CommentGroupId).Select(x => x.item.Name).FirstOrDefault()</td>
+                                            <td>@review.Rating</td>
+                                            <td>
+                                                <a href="#" class="btn p-0 preview-btn" data-bs-toggle="tooltip" data-bs-placement="bottom" data-id="@review.Id" data-mode="review" title="پیشنمایش">
+                                                    <span class="svg-icon svg-icon-primary svg-icon-2x" data-bs-toggle="modal" data-bs-target="#preview-modal">
+                                                        <!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-05-14-112058/theme/html/demo1/dist/../src/media/svg/icons/Files/Selected-file.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                                <polygon points="0 0 24 0 24 24 0 24" />
+                                                                <path d="M4.85714286,1 L11.7364114,1 C12.0910962,1 12.4343066,1.12568431 12.7051108,1.35473959 L17.4686994,5.3839416 C17.8056532,5.66894833 18,6.08787823 18,6.52920201 L18,19.0833333 C18,20.8738751 17.9795521,21 16.1428571,21 L4.85714286,21 C3.02044787,21 3,20.8738751 3,19.0833333 L3,2.91666667 C3,1.12612489 3.02044787,1 4.85714286,1 Z M8,12 C7.44771525,12 7,12.4477153 7,13 C7,13.5522847 7.44771525,14 8,14 L15,14 C15.5522847,14 16,13.5522847 16,13 C16,12.4477153 15.5522847,12 15,12 L8,12 Z M8,16 C7.44771525,16 7,16.4477153 7,17 C7,17.5522847 7.44771525,18 8,18 L11,18 C11.5522847,18 12,17.5522847 12,17 C12,16.4477153 11.5522847,16 11,16 L8,16 Z" fill="#000000" fill-rule="nonzero" opacity="0.3" />
+                                                                <path d="M6.85714286,3 L14.7364114,3 C15.0910962,3 15.4343066,3.12568431 15.7051108,3.35473959 L20.4686994,7.3839416 C20.8056532,7.66894833 21,8.08787823 21,8.52920201 L21,21.0833333 C21,22.8738751 20.9795521,23 19.1428571,23 L6.85714286,23 C5.02044787,23 5,22.8738751 5,21.0833333 L5,4.91666667 C5,3.12612489 5.02044787,3 6.85714286,3 Z M8,12 C7.44771525,12 7,12.4477153 7,13 C7,13.5522847 7.44771525,14 8,14 L15,14 C15.5522847,14 16,13.5522847 16,13 C16,12.4477153 15.5522847,12 15,12 L8,12 Z M8,16 C7.44771525,16 7,16.4477153 7,17 C7,17.5522847 7.44771525,18 8,18 L11,18 C11.5522847,18 12,17.5522847 12,17 C12,16.4477153 11.5522847,16 11,16 L8,16 Z" fill="#000000" fill-rule="nonzero" />
+                                                            </g>
+                                                        </svg><!--end::Svg Icon-->
+                                                    </span>
+                                                </a>
+                                                <a href="#" class="btn p-0 delete-review-btn" data-bs-toggle="tooltip" data-bs-placement="bottom" data-id="@review.Id" title="حذف">
+                                                    <span class="svg-icon svg-icon-danger svg-icon-2x">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                                <rect x="0" y="0" width="24" height="24" />
+                                                                <path d="M6,8 L18,8 L17.106535,19.6150447 C17.04642,20.3965405 16.3947578,21 15.6109533,21 L8.38904671,21 C7.60524225,21 6.95358004,20.3965405 6.89346498,19.6150447 L6,8 Z M8,10 L8.45438229,14.0894406 L15.5517885,14.0339036 L16,10 L8,10 Z" fill="#000000" fill-rule="nonzero" />
+                                                                <path d="M14,4.5 L14,3.5 C14,3.22385763 13.7761424,3 13.5,3 L10.5,3 C10.2238576,3 10,3.22385763 10,3.5 L10,4.5 L5.5,4.5 C5.22385763,4.5 5,4.72385763 5,5 L5,5.5 C5,5.77614237 5.22385763,6 5.5,6 L18.5,6 C18.7761424,6 19,5.77614237 19,5.5 L19,5 C19,4.72385763 18.7761424,4.5 18.5,4.5 L14,4.5 Z" fill="#000000" opacity="0.3" />
+                                                            </g>
+                                                        </svg>
+                                                    </span>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        reviewCounts++;
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="tab-pane fade" id="comment-list-tab" role="tabpanel">
+                            <div class="d-flex align-items-center position-relative mb-5">
+                                <span class="svg-icon svg-icon-1 position-absolute ms-4">
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                            <rect x="0" y="0" width="24" height="24" />
+                                            <path d="M14.2928932,16.7071068 C13.9023689,16.3165825 13.9023689,15.6834175 14.2928932,15.2928932 C14.6834175,14.9023689 15.3165825,14.9023689 15.7071068,15.2928932 L19.7071068,19.2928932 C20.0976311,19.6834175 20.0976311,20.3165825 19.7071068,20.7071068 C19.3165825,21.0976311 18.6834175,21.0976311 18.2928932,20.7071068 L14.2928932,16.7071068 Z" fill="#000000" fill-rule="nonzero" opacity="0.3" />
+                                            <path d="M11,16 C13.7614237,16 16,13.7614237 16,11 C16,8.23857625 13.7614237,6 11,6 C8.23857625,6 6,8.23857625 6,11 C6,13.7614237 8.23857625,16 11,16 Z M11,18 C7.13400675,18 4,14.8659932 4,11 C4,7.13400675 7.13400675,4 11,4 C14.8659932,4 18,7.13400675 18,11 C18,14.8659932 14.8659932,18 11,18 Z" fill="#000000" fill-rule="nonzero" />
+                                        </g>
+                                    </svg>
+                                </span>
+                                <input type="text" data-kt-filter="comment-search" class="form-control form-control-solid w-100 ps-14" placeholder="جستجوی کامنت ..." />
+                            </div>
+                            <table id="comments-tbl" class="table table-striped table-row-bordered gy-5 gs-7 border rounded">
+                                <thead>
+                                    <tr class="fw-bolder fs-6 text-gray-800 px-7 text-center">
+                                        <th>#</th>
+                                        <th>نام نویسنده</th>
+                                        <th>گروه کامنت</th>
+                                        <th>عملیات</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var comment in Model.Comments)
+                                    {
+                                        <tr class="text-center">
+                                            <td>@commentCounts</td>
+                                            <td>@comment.Author</td>
+                                            <td>@commentGroups.Select(x => new { item = x }).Where(x => x.item.Id == comment.CommentGroupId).Select(x => x.item.Name).FirstOrDefault()</td>
+                                            <td>
+                                                <a href="#" class="btn p-0 preview-btn" data-bs-toggle="tooltip" data-bs-placement="bottom" data-id="@comment.Id" data-mode="comment" title="پیشنمایش">
+                                                    <span class="svg-icon svg-icon-primary svg-icon-2x" data-bs-toggle="modal" data-bs-target="#preview-modal">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                                <polygon points="0 0 24 0 24 24 0 24" />
+                                                                <path d="M4.85714286,1 L11.7364114,1 C12.0910962,1 12.4343066,1.12568431 12.7051108,1.35473959 L17.4686994,5.3839416 C17.8056532,5.66894833 18,6.08787823 18,6.52920201 L18,19.0833333 C18,20.8738751 17.9795521,21 16.1428571,21 L4.85714286,21 C3.02044787,21 3,20.8738751 3,19.0833333 L3,2.91666667 C3,1.12612489 3.02044787,1 4.85714286,1 Z M8,12 C7.44771525,12 7,12.4477153 7,13 C7,13.5522847 7.44771525,14 8,14 L15,14 C15.5522847,14 16,13.5522847 16,13 C16,12.4477153 15.5522847,12 15,12 L8,12 Z M8,16 C7.44771525,16 7,16.4477153 7,17 C7,17.5522847 7.44771525,18 8,18 L11,18 C11.5522847,18 12,17.5522847 12,17 C12,16.4477153 11.5522847,16 11,16 L8,16 Z" fill="#000000" fill-rule="nonzero" opacity="0.3" />
+                                                                <path d="M6.85714286,3 L14.7364114,3 C15.0910962,3 15.4343066,3.12568431 15.7051108,3.35473959 L20.4686994,7.3839416 C20.8056532,7.66894833 21,8.08787823 21,8.52920201 L21,21.0833333 C21,22.8738751 20.9795521,23 19.1428571,23 L6.85714286,23 C5.02044787,23 5,22.8738751 5,21.0833333 L5,4.91666667 C5,3.12612489 5.02044787,3 6.85714286,3 Z M8,12 C7.44771525,12 7,12.4477153 7,13 C7,13.5522847 7.44771525,14 8,14 L15,14 C15.5522847,14 16,13.5522847 16,13 C16,12.4477153 15.5522847,12 15,12 L8,12 Z M8,16 C7.44771525,16 7,16.4477153 7,17 C7,17.5522847 7.44771525,18 8,18 L11,18 C11.5522847,18 12,17.5522847 12,17 C12,16.4477153 11.5522847,16 11,16 L8,16 Z" fill="#000000" fill-rule="nonzero" />
+                                                            </g>
+                                                        </svg>
+                                                    </span>
+                                                </a>
+                                                <a href="#" class="btn p-0 delete-comment-btn" data-bs-toggle="tooltip" data-bs-placement="bottom" data-id="@comment.Id" title="حذف">
+                                                    <span class="svg-icon svg-icon-danger svg-icon-2x">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                                <rect x="0" y="0" width="24" height="24" />
+                                                                <path d="M6,8 L18,8 L17.106535,19.6150447 C17.04642,20.3965405 16.3947578,21 15.6109533,21 L8.38904671,21 C7.60524225,21 6.95358004,20.3965405 6.89346498,19.6150447 L6,8 Z M8,10 L8.45438229,14.0894406 L15.5517885,14.0339036 L16,10 L8,10 Z" fill="#000000" fill-rule="nonzero" />
+                                                                <path d="M14,4.5 L14,3.5 C14,3.22385763 13.7761424,3 13.5,3 L10.5,3 C10.2238576,3 10,3.22385763 10,3.5 L10,4.5 L5.5,4.5 C5.22385763,4.5 5,4.72385763 5,5 L5,5.5 C5,5.77614237 5.22385763,6 5.5,6 L18.5,6 C18.7761424,6 19,5.77614237 19,5.5 L19,5 C19,4.72385763 18.7761424,4.5 18.5,4.5 L14,4.5 Z" fill="#000000" opacity="0.3" />
+                                                            </g>
+                                                        </svg>
+                                                    </span>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        commentCounts++;
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>*@
+</div>
+
+<!-- Preview Modal-->
+
+<div class="modal fade" tabindex="-1" id="preview-modal">
+    <div class="modal-dialog modal-lg">
+        <form id="editGroupForm" class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">پیش نمایش</h5>
+                <!--begin::Close-->
+                <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                    <span class="svg-icon svg-icon-primary svg-icon-2x">
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                <g transform="translate(12.000000, 12.000000) rotate(-45.000000) translate(-12.000000, -12.000000) translate(4.000000, 4.000000)" fill="#000000">
+                                    <rect x="0" y="7" width="16" height="2" rx="1" />
+                                    <rect opacity="0.3" transform="translate(8.000000, 8.000000) rotate(-270.000000) translate(-8.000000, -8.000000) " x="0" y="7" width="16" height="2" rx="1" />
+                                </g>
+                            </g>
+                        </svg>
+                    </span>
+                </div>
+                <!--end::Close-->
+            </div>
+
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="comment-preview">
+                                <div class="comment-right">
+                                    <img src="~/assets/media/avatars/blank.png" width="150" height="150" />
+                                    <h2 class="comment-title"></h2>
+                                    <div class="rating justify-content-center">
+                                        <div class="rating-label me-2">
+                                            <i class="bi bi-star fs-2"></i>
+                                        </div>
+                                        <div class="rating-label me-2">
+                                            <i class="bi bi-star fs-2"></i>
+                                        </div>
+                                        <div class="rating-label me-2">
+                                            <i class="bi bi-star fs-2"></i>
+                                        </div>
+                                        <div class="rating-label me-2">
+                                            <i class="bi bi-star fs-2"></i>
+                                        </div>
+                                        <div class="rating-label me-2">
+                                            <i class="bi bi-star fs-2"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="comment-body">
+                                    <p></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Styles {
+    <link href="~/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/css/comments.css" rel="stylesheet" type="text/css" />
+}
+
+@section Scripts {
+    <script src="~/assets/plugins/custom/datatables/datatables.bundle.js"></script>
+    <script src="~/assets/js/views/user-panel/comments.js"></script>
+}

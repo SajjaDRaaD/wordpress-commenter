@@ -1,0 +1,104 @@
+﻿@font-face {
+    font-family: 'IranSans-Fa';
+    src: url('../fonts/iran-sans/IRANSansWeb(FaNum).woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'IranSans-Bold-Fa';
+    src: url('../fonts/iran-sans/IRANSansWeb(FaNum)_Bold.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'IranSans';
+    src: url('../fonts/iran-sans/IRANSansWeb.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'IranSans-Bold';
+    src: url('../fonts/iran-sans/IRANSansWeb_Bold.woff2') format('woff2');
+}
+
+
+body , .tooltip {
+    font-family : IranSans-Fa !important;
+}
+h1, h2, h3, h4, h5, h6 {
+    font-family: IranSans-Bold-Fa !important;
+}
+
+.sans-fa {
+    font-family: IranSans-Fa !important;
+}
+
+.sans-bold-fa {
+    font-family: IranSans-Bold-Fa !important;
+}
+
+.sans {
+    font-family: IranSans !important;
+}
+
+.sans-bold {
+    font-family: IranSans-Bold !important;
+}
+.header-fixed.toolbar-fixed .wrapper {
+    padding-top: calc(25px + var(--kt-toolbar-height)) !important;
+}
+
+label {
+    font-family: IranSans-Bold-Fa;
+}
+
+.spinner-container {
+    width: 100%;
+    height: 100%;
+    z-index: 99999;
+    text-align: center;
+    position:absolute;
+    left:0;
+    right:0;
+    backdrop-filter:blur(1px);
+    display:none;
+}
+
+.spinner {
+    margin: auto;
+    border: 5px solid #dbf2ff;
+    /*
+  change to dotted for something cool.
+  change width to 1px for tapered bar
+  */
+    width: 50px;
+    height: 50px;
+    display: inline-block;
+    position: absolute;
+    top: 45%;
+    border-radius: 50%;
+    border-right: 5px solid #018df7;
+    text-align: center;
+    animation-name: spin;
+    animation-duration: 900ms;
+    animation-iteration-count: infinite;
+    /*animation-timing-function: linear; /*linear spin */
+    animation-timing-function: cubic-bezier(0.53, 0.21, 0.29, 0.67);
+}
+
+@-webkit-keyframes spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+    /*50% {width:24px;height:24px} /*shrinking effect*/
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@keyframes spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+    /*50% {width:24px;height:24px} /*shrinking effect*/
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
+}

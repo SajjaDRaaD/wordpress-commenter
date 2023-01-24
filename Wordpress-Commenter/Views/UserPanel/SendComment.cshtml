@@ -1,0 +1,359 @@
+﻿@model ClientApp.Models.User.SendCommentVm
+@{
+    ViewData["Title"] = "ارسال کامنت";
+    Layout = "~/Views/Shared/Dashboard/_UserLayout.cshtml";
+
+    var commerceGroups = Model.CommentGroupList.Where(x => x.Type == "فروشگاهی").ToList();
+    var blogGroups = Model.CommentGroupList.Where(x => x.Type == "بلاگ").ToList();
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title sans-bold-fa">ارسال کامنت</span>
+                </div>
+                <div class="card-body">
+                    <!--begin::Stepper-->
+                    <div class="stepper stepper-pills stepper-column d-flex flex-column flex-lg-row" id="kt_stepper_example_vertical">
+                        <!--begin::Aside-->
+                        <div class="d-flex flex-row-auto w-100 w-lg-300px">
+                            <!--begin::Nav-->
+                            <div class="stepper-nav">
+                                <!--begin::Step 1-->
+                                <div class="stepper-item me-5 current" data-kt-stepper-element="nav">
+                                    <!--begin::Wrapper-->
+                                    <div class="stepper-wrapper d-flex align-items-center">
+                                        <!--begin::Icon-->
+                                        <div class="stepper-icon w-40px h-40px">
+                                            <i class="stepper-check fas fa-check"></i>
+                                            <span class="stepper-number">1</span>
+                                        </div>
+                                        <!--end::Icon-->
+                                        <!--begin::Label-->
+                                        <div class="stepper-label">
+                                            <h3 class="stepper-title">
+                                                انتخاب سایت
+                                            </h3>
+                                        </div>
+                                        <!--end::Label-->
+                                    </div>
+                                    <!--end::Wrapper-->
+                                    <!--begin::Line-->
+                                    <div class="stepper-line h-40px"></div>
+                                    <!--end::Line-->
+                                </div>
+                                <!--end::Step 1-->
+                                <!--begin::Step 2-->
+                                <div class="stepper-item me-5" data-kt-stepper-element="nav">
+                                    <!--begin::Wrapper-->
+                                    <div class="stepper-wrapper d-flex align-items-center">
+                                        <!--begin::Icon-->
+                                        <div class="stepper-icon w-40px h-40px">
+                                            <i class="stepper-check fas fa-check"></i>
+                                            <span class="stepper-number">2</span>
+                                        </div>
+                                        <!--begin::Icon-->
+                                        <!--begin::Label-->
+                                        <div class="stepper-label">
+                                            <h3 class="stepper-title">
+                                                انتخاب نوع کامنت
+                                            </h3>
+                                        </div>
+                                        <!--end::Label-->
+                                    </div>
+                                    <!--end::Wrapper-->
+                                    <!--begin::Line-->
+                                    <div class="stepper-line h-40px"></div>
+                                    <!--end::Line-->
+                                </div>
+                                <!--end::Step 2-->
+                                <!--begin::Step 3-->
+                                <div class="stepper-item me-5" data-kt-stepper-element="nav">
+                                    <!--begin::Wrapper-->
+                                    <div class="stepper-wrapper d-flex align-items-center">
+                                        <!--begin::Icon-->
+                                        <div class="stepper-icon w-40px h-40px">
+                                            <i class="stepper-check fas fa-check"></i>
+                                            <span class="stepper-number">3</span>
+                                        </div>
+                                        <!--begin::Icon-->
+                                        <!--begin::Label-->
+                                        <div class="stepper-label">
+                                            <h3 class="stepper-title">
+                                                انتخاب دسته بندی مقصد
+                                            </h3>
+                                        </div>
+                                        <!--end::Label-->
+                                    </div>
+                                    <!--end::Wrapper-->
+                                    <!--begin::Line-->
+                                    <div class="stepper-line h-40px"></div>
+                                    <!--end::Line-->
+                                </div>
+                                <!--end::Step 3-->
+                                <!--begin::Step 4-->
+                                <div class="stepper-item me-5" data-kt-stepper-element="nav">
+                                    <!--begin::Wrapper-->
+                                    <div class="stepper-wrapper d-flex align-items-center">
+                                        <!--begin::Icon-->
+                                        <div class="stepper-icon w-40px h-40px">
+                                            <i class="stepper-check fas fa-check"></i>
+                                            <span class="stepper-number">4</span>
+                                        </div>
+                                        <!--begin::Icon-->
+                                        <!--begin::Label-->
+                                        <div class="stepper-label">
+                                            <h3 class="stepper-title">
+                                                انتخاب کامنت ها
+                                            </h3>
+                                        </div>
+                                        <!--end::Label-->
+                                    </div>
+                                    <!--end::Wrapper-->
+                                </div>
+                                <!--end::Step 4-->
+                                <!--begin::Step 5-->
+                                <div class="stepper-item me-5" data-kt-stepper-element="nav">
+                                    <!--begin::Wrapper-->
+                                    <div class="stepper-wrapper d-flex align-items-center">
+                                        <!--begin::Icon-->
+                                        <div class="stepper-icon w-40px h-40px">
+                                            <i class="stepper-check fas fa-check"></i>
+                                            <span class="stepper-number">5</span>
+                                        </div>
+                                        <!--begin::Icon-->
+                                        <!--begin::Label-->
+                                        <div class="stepper-label">
+                                            <h3 class="stepper-title">
+                                                ارسال کامنت
+                                            </h3>
+                                        </div>
+                                        <!--end::Label-->
+                                    </div>
+                                    <!--end::Wrapper-->
+                                </div>
+                                <!--end::Step 5-->
+                            </div>
+                            <!--end::Nav-->
+                        </div>
+
+                        <!--begin::Content-->
+                        <div class="flex-row-fluid">
+                            <!--begin::Form-->
+                            <form class="form w-lg-500px mx-auto" novalidate="novalidate" asp-controller="UserPanel" asp-action="SendSingleComment" method="post" id="send-comment-form">
+                                <!--begin::Group-->
+                                <div class="mb-5">
+                                    <!--begin::Step 1-->
+                                    <div class="flex-column current" data-kt-stepper-element="content">
+                                        <!--begin::Input group-->
+                                        <div class="fv-row mb-10">
+                                            <!--begin::Label-->
+                                            <label class="form-label">سایت مقصد را انتخاب کنید :</label>
+                                            <!--end::Label-->
+                                            <select class="form-select form-select-solid" id="website-select" name="websiteId">
+                                                <option disabled selected value="">سایت مقصد</option>
+                                                @foreach (var website in Model.WebsitesList)
+                                                {
+                                                    <option value="@website.Id">@website.Name (@website.Url)</option>
+                                                }
+                                            </select>
+                                        </div>
+                                        <button class="btn btn-primary" id="website-step">بعدی</button>
+                                        <!--end::Input group-->
+                                    </div>
+                                    <!--begin::Step 1-->
+                                    <!--begin::Step 2-->
+                                    <div class="flex-column" data-kt-stepper-element="content">
+                                        <div class="fv-row mb-10">
+                                            <!--begin::Option-->
+                                            <input type="radio" class="btn-check comment-type" name="comment-type" value="blog" id="kt_radio_buttons_2_option_1" />
+                                            <label class="btn btn-outline btn-outline-dashed btn-active-light-primary p-7 d-flex align-items-center mb-5" for="kt_radio_buttons_2_option_1">
+                                                <!--begin::Svg Icon | path: icons/duotune/coding/cod001.svg-->
+                                                <span class="svg-icon svg-icon-4x me-4">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                            <rect x="0" y="0" width="24" height="24" />
+                                                            <rect fill="#000000" x="4" y="5" width="16" height="3" rx="1.5" />
+                                                            <path d="M5.5,15 L18.5,15 C19.3284271,15 20,15.6715729 20,16.5 C20,17.3284271 19.3284271,18 18.5,18 L5.5,18 C4.67157288,18 4,17.3284271 4,16.5 C4,15.6715729 4.67157288,15 5.5,15 Z M5.5,10 L12.5,10 C13.3284271,10 14,10.6715729 14,11.5 C14,12.3284271 13.3284271,13 12.5,13 L5.5,13 C4.67157288,13 4,12.3284271 4,11.5 C4,10.6715729 4.67157288,10 5.5,10 Z" fill="#000000" opacity="0.3" />
+                                                        </g>
+                                                    </svg>
+                                                </span>
+                                                <!--end::Svg Icon-->
+
+                                                <span class="d-block fw-semibold text-start">
+                                                    <span class="text-dark fw-bold d-block fs-3">کامنت وبلاگ</span>
+                                                    <span class="text-muted fw-semibold fs-6">
+                                                        ارسال کامنت وبلاگ برای دسته بندی های ثبت شده وردپرس در سایت مقصد
+                                                    </span>
+                                                </span>
+                                            </label>
+                                            <!--end::Option-->
+                                            <!--begin::Option-->
+                                            <input type="radio" class="btn-check comment-type" name="comment-type" value="commerce" id="kt_radio_buttons_2_option_2" />
+                                            <label class="btn btn-outline btn-outline-dashed btn-active-light-primary p-7 d-flex align-items-center" for="kt_radio_buttons_2_option_2">
+                                                <!--begin::Svg Icon | path: icons/duotune/communication/com003.svg-->
+                                                <span class="svg-icon svg-icon-4x me-4">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                            <rect x="0" y="0" width="24" height="24" />
+                                                            <path d="M14,9 L14,8 C14,6.8954305 13.1045695,6 12,6 C10.8954305,6 10,6.8954305 10,8 L10,9 L8,9 L8,8 C8,5.790861 9.790861,4 12,4 C14.209139,4 16,5.790861 16,8 L16,9 L14,9 Z M14,9 L14,8 C14,6.8954305 13.1045695,6 12,6 C10.8954305,6 10,6.8954305 10,8 L10,9 L8,9 L8,8 C8,5.790861 9.790861,4 12,4 C14.209139,4 16,5.790861 16,8 L16,9 L14,9 Z" fill="#000000" fill-rule="nonzero" opacity="0.3" />
+                                                            <path d="M6.84712709,9 L17.1528729,9 C17.6417121,9 18.0589022,9.35341304 18.1392668,9.83560101 L19.611867,18.671202 C19.7934571,19.7607427 19.0574178,20.7911977 17.9678771,20.9727878 C17.8592143,20.9908983 17.7492409,21 17.6390792,21 L6.36092084,21 C5.25635134,21 4.36092084,20.1045695 4.36092084,19 C4.36092084,18.8898383 4.37002252,18.7798649 4.388133,18.671202 L5.86073316,9.83560101 C5.94109783,9.35341304 6.35828794,9 6.84712709,9 Z" fill="#000000" />
+                                                        </g>
+                                                    </svg>
+                                                </span>
+                                                <!--end::Svg Icon-->
+
+                                                <span class="d-block fw-semibold text-start">
+                                                    <span class="text-dark fw-bold d-block fs-3">کامنت فروشگاهی</span>
+                                                    <span class="text-muted fw-semibold fs-6">
+                                                        ارسال کامنت فروشگاهی برای دسته بندی های ثبت شده ووکامرس در سایت مقصد
+                                                    </span>
+                                                </span>
+                                            </label>
+                                            <!--end::Option-->
+                                        </div>
+                                        <button class="btn btn-primary" id="comment-type-step">
+                                            <span class="indicator-label">
+                                                بعدی
+                                            </span>
+                                            <span class="indicator-progress">
+                                                در حال دریافت اطلاعات ... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                            </span>
+                                        </button>
+                                    </div>
+                                    <!--begin::Step 2-->
+                                    <!--begin::Step 3-->
+                                    <div class="flex-column" data-kt-stepper-element="content">
+                                        <div class="fv-row mb-10">
+                                            <!--begin::Label-->
+                                            <label class="form-label">دسته بندی مقصد را انتخاب کنید :</label>
+                                            <!--end::Label-->
+                                            <select class="form-select form-select-solid" id="destination-category" name="desCatId" data-control="select2" data-placeholder="دسته بندی مقصد">
+                                                <option selected disabled value=""></option>
+                                            </select>
+                                        </div>
+                                        <button class="btn btn-primary" id="select-category-step">
+                                            <span class="indicator-label">
+                                                بعدی
+                                            </span>
+                                            <span class="indicator-progress">
+                                                در حال دریافت اطلاعات ... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                            </span>
+                                        </button>
+                                    </div>
+                                    <!--begin::Step 3-->
+                                    <!--begin::Step 4-->
+                                    <div class="flex-column" data-kt-stepper-element="content">
+                                        <div class="fv-row mb-10">
+                                            <!--begin::Label-->
+                                            <label class="form-label">دسته بندی کامنت را انتخاب کنید :</label>
+                                            <!--end::Label-->
+                                            <select class="form-select form-select-solid" id="comment-group-select" name="commentCatId" aria-label="Select example">
+                                                <option disabled selected value="">دسته بندی کامنت</option>
+                                                @foreach (var group in commerceGroups)
+                                                {
+                                                        <option class="commerce-gp" value="@group.Id">@group.Name</option>
+                                                }
+                                                @foreach (var group in blogGroups)
+                                                {
+                                                        <option class="blog-gp" value="@group.Id">@group.Name</option>
+                                                }
+                                            </select>
+                                        </div>
+                                        <button class="btn btn-primary" id="comment-group-step">بعدی</button>
+                                    </div>
+                                    <!--begin::Step 4-->
+                                    <!--begin::Step 5-->
+                                    <div class="flex-column fv-row" data-kt-stepper-element="content">
+                                        <div class="card" style="border:1px solid #ededed;margin:10px 0;background:#ededed;">
+                                            <div class="card-body">
+                                                <div class="d-flex flex-column">
+                                                    <li class="d-flex align-items-center py-2">
+                                                        <span class="bullet me-5"></span>
+                                                        <strong>نام سایت مقصد : </strong>
+                                                        <span id="cm-destination-name"></span>
+                                                    </li>
+                                                    <li class="d-flex align-items-center py-2">
+                                                        <span class="bullet me-5"></span>
+                                                        <strong>دسته بندی مقصد : </strong>
+                                                        <span id="cm-destination-category"></span>
+                                                    </li>
+                                                    <li class="d-flex align-items-center py-2">
+                                                        <span class="bullet me-5"></span>
+                                                        <strong>نوع کامنت ارسالی : </strong>
+                                                        <span id="cm-comment-type"></span>
+                                                    </li>
+                                                    <li class="d-flex align-items-center py-2">
+                                                        <span class="bullet me-5"></span>
+                                                        <strong>گروه ارسالی : </strong>
+                                                        <span id="cm-comment-category"></span>
+                                                    </li>
+                                                </div>
+                                            </div>                                            
+                                        </div>
+                                        <label class="form-label my-3">تعداد پست ارسالی در هر دوره :</label>
+                                        <input class="form-control form-control-solid" style="direction:rtl;" name="productsPerSendCount" type="number" placeholder="تعداد" min="1" max="1"/>
+
+                                        <label class="form-label my-3">تعداد کامنت ارسالی برای هر پست :</label>
+                                        <input class="form-control form-control-solid" style="direction:rtl;" name="commentsPerProductCount" type="number" placeholder="تعداد"/>
+
+                                        <label class="form-label my-3">زمانبندی ارسال :</label>
+                                        <select class="my-3 form-select form-select-solid" id="send-period" name="sendPeriod" aria-label="Select example">
+                                            <option disabled selected value="">بازه زمانی ارسال</option>
+                                            <option value="hourly">هر ساعت</option>
+                                            <option value="daily">هر روز</option>
+                                            <option value="weekly">هر هفته</option>
+                                        </select>
+
+                                        <div class="schedule-detail form-group d-none gap-5 mb-5" id="hourly">
+                                            <input class="form-control form-control-solid" type="number" min="0" max="59" name="hourlyMinute" placeholder="دقیقه"/>
+                                        </div>
+                                        <div class="schedule-detail form-group d-none gap-5 mb-5" id="daily">
+                                            <input class="form-control form-control-solid" type="number" min="0" max="23" name="dailyHour" placeholder="ساعت" />
+                                            <input class="form-control form-control-solid" type="number" min="0" max="59" name="dailyMinute" placeholder="دقیقه" />
+                                        </div>
+                                        <div class="schedule-detail form-group d-none gap-5 mb-5" id="weekly">
+                                            <select class="form-select form-select-solid" id="weekly-dow" name="weeklyDOW" aria-label="Select example">
+                                                <option disabled selected value="">روز هفته</option>
+                                                <option value="SAT">شنبه</option>
+                                                <option value="SUN">یکشنبه</option>
+                                                <option value="MON">دوشنبه</option>
+                                                <option value="TUE">سه شنبه</option>
+                                                <option value="WED">چهارشنبه</option>
+                                                <option value="THU">پنج شنبه</option>
+                                                <option value="FRI">جمعه</option>
+                                            </select>
+                                            <input class="form-control form-control-solid" type="number" min="0" max="23" name="weeklyHour" placeholder="ساعت"/>
+                                            <input class="form-control form-control-solid" type="number" min="0" max="59" name="weeklyMinute" placeholder="دقیقه"/>
+                                        </div>
+                                        <input type="hidden" id="posts-id" name="posts-id" />
+                                        <button class="btn btn-primary" id="send-comment-submit-btn">ارسال</button>
+                                    </div>
+                                    <!--begin::Step 5-->
+                                </div>
+                                <!--end::Group-->
+                            </form>
+                            <!--end::Form-->
+                        </div>
+                    </div>
+                    <!--end::Stepper-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Styles {
+    <style>
+        .select2-container--bootstrap5 .select2-dropdown .select2-results__option.select2-results__option--selected {
+            background-position: center left 1.25rem !important;
+        }
+        .schedule-detail input {
+            direction:rtl;
+        }
+    </style>
+}
+@section Scripts {
+    <script src="~/assets/js/views/user-panel/send-comment.js"></script>
+}

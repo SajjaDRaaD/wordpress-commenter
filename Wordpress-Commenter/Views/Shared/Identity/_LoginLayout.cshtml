@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html>
+<html direction="rtl" dir="rtl" style="direction: rtl">
+	<!--begin::Head-->
+	<head>
+		<base href="../../../">
+		<title>@ViewData["Title"] | لومینا</title>
+		<meta charset="utf-8" />
+		<link rel="shortcut icon" href="~/assets/media/logos/favicon.ico" />
+		<!--begin::Fonts-->
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
+		<!--end::Fonts-->
+		<!--begin::Global Stylesheets Bundle(used by all pages)-->
+		<link href="~/assets/plugins/global/plugins.bundle.rtl.css" rel="stylesheet" type="text/css" />
+		<link href="~/assets/css/style.bundle.rtl.css" rel="stylesheet" type="text/css" />
+		<link href="~/assets/css/custom-styles.css" rel="stylesheet" type="text/css" />
+		<!--end::Global Stylesheets Bundle-->
+		@RenderSection("Styles", required: false)
+	</head>
+	<!--end::Head-->
+	<!--begin::Body-->
+	<body id="kt_body" class="bg-body">
+		<!--begin::Main-->
+		<!--begin::Root-->
+		<div class="d-flex flex-column flex-root">
+			<!--begin::Authentication - Sign-in -->
+			<div class="d-flex flex-column flex-lg-row flex-column-fluid">
+				<!--begin::Aside-->
+				<div class="d-flex flex-column flex-lg-row-auto w-xl-600px positon-xl-relative justify-content-center" style="background-color: #fe6f0a">
+					<!--begin::Wrapper-->
+					<div class="d-flex flex-column position-xl-fixed top-0 bottom-0 w-xl-600px scroll-y">
+						<!--begin::Content-->
+						<div class="d-flex flex-row-fluid flex-column text-center p-10 pt-lg-20 justify-content-center">
+							<!--begin::Logo-->
+							<a href="../../demo1/dist/index.html" class="py-9 mb-5">
+								<img alt="Logo" src="~/assets/media/logos/loomina-logo-white.png" class="h-200px" />
+							</a>
+							<!--end::Logo-->
+							<!--begin::Title-->
+							<h1 class="fw-bolder fs-2qx pb-5 pb-md-10" style="color: #fff;">کامنت گذار خودکار وردپرس</h1>
+							<!--end::Title-->
+							<!--begin::Description-->
+							<p class="fw-bold fs-1" style="color: #fff;">مسیر سئو را آسان طی کنید
+							<!--end::Description-->
+						</div>
+						<!--end::Content-->
+					</div>
+					<!--end::Wrapper-->
+				</div>
+				<!--end::Aside-->
+				@RenderBody()
+			</div>
+			<!--end::Authentication - Sign-in-->
+		</div>
+		<!--end::Root-->
+		<!--end::Main-->
+		<!--begin::Javascript-->
+		<script>var hostUrl = "~/assets/";</script>
+		<!--begin::Global Javascript Bundle(used by all pages)-->
+		<script src="~/assets/plugins/global/plugins.bundle.js"></script>
+		<script src="~/assets/js/scripts.bundle.js"></script>
+		<!--end::Global Javascript Bundle-->
+		<!--begin::Page Custom Javascript(used by this page)-->
+		<script src="~/assets/js/custom/authentication/sign-in/general.js"></script>
+		<!--end::Page Custom Javascript-->
+		<!--end::Javascript-->
+		@RenderSection("Scripts" , required: false)
+	</body>
+	<!--end::Body-->
+</html>

@@ -1,0 +1,56 @@
+﻿@model ClientApp.Models.User.ScrappingVm
+@{
+    ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/Dashboard/_UserLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <h3 class="card-title">استخراج کامنت</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-7">
+                            <div class="mb-10">
+                                <label for="digikalaCategoryLink" class="required form-label">نام دسته بندی دیجی کالا</label>
+                                <input type="text" class="form-control mb-5" placeholder="مثال : notebook-netbook-ultrabook" name="digikalaCategoryLink" />
+                                <button type="button" class="btn btn-success w-100" id="validateLink">اعتبار سنجی دسته بندی</button>
+                            </div>
+                        </div>
+                        <div class="col-5">
+                            <div class="link-validation-info border-1">
+                                <div class="req-status">
+                                    <strong>وضعیت درخواست :</strong>
+                                    <span>نامشخص</span>
+                                </div>
+                                <div class="req-category-name">
+                                    <strong>نام دسته بندی :</strong>
+                                    <span>نامشخص</span>
+                                </div>
+                                <div class="req-pages-count">
+                                    <strong>تعداد صفحات :</strong>
+                                    <span>نامشخص</span>
+                                </div>
+                                <div class="req-product-count">
+                                    <strong>تعداد محصولات :</strong>
+                                    <span>نامشخص</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <link href="~/assets/css/scrapping.css" rel="stylesheet" type="text/css" />
+}
+
+@section Scripts {
+    <script src="~/assets/js/views/user-panel/scrapping.js"></script>
+}

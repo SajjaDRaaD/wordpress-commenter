@@ -1,0 +1,345 @@
+﻿@model ClientApp.Models.User.WebsitesVM
+
+@{
+    ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/Dashboard/_UserLayout.cshtml";
+    var count = 1;
+
+}
+
+@if ((string)TempData["status"] == "success")
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <!--begin::Alert-->
+                <div class="alert alert-dismissible bg-success d-flex flex-column flex-sm-row p-5 mb-10">
+                    <!--begin::Icon-->
+                    <span class="svg-icon svg-icon-2hx svg-icon-light me-4 mb-5 mb-sm-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                <rect x="0" y="0" width="24" height="24" />
+                                <path d="M4,4 L11.6314229,2.5691082 C11.8750185,2.52343403 12.1249815,2.52343403 12.3685771,2.5691082 L20,4 L20,13.2830094 C20,16.2173861 18.4883464,18.9447835 16,20.5 L12.5299989,22.6687507 C12.2057287,22.8714196 11.7942713,22.8714196 11.4700011,22.6687507 L8,20.5 C5.51165358,18.9447835 4,16.2173861 4,13.2830094 L4,4 Z" fill="#000000" opacity="0.3" />
+                                <path d="M11.1750002,14.75 C10.9354169,14.75 10.6958335,14.6541667 10.5041669,14.4625 L8.58750019,12.5458333 C8.20416686,12.1625 8.20416686,11.5875 8.58750019,11.2041667 C8.97083352,10.8208333 9.59375019,10.8208333 9.92916686,11.2041667 L11.1750002,12.45 L14.3375002,9.2875 C14.7208335,8.90416667 15.2958335,8.90416667 15.6791669,9.2875 C16.0625002,9.67083333 16.0625002,10.2458333 15.6791669,10.6291667 L11.8458335,14.4625 C11.6541669,14.6541667 11.4145835,14.75 11.1750002,14.75 Z" fill="#000000" />
+                            </g>
+                        </svg>
+                    </span>
+                    <!--end::Icon-->
+                    <!--begin::Wrapper-->
+                    <div class="d-flex flex-column text-light pe-0 pe-sm-10">
+                        <!--begin::Title-->
+                        <h4 class="mb-1 text-light">عملیات با موفقیت انجام شد.</h4>
+                        <!--end::Title-->
+                        <!--begin::Content-->
+                        <span>@TempData["message"]</span>
+
+                        <!--end::Content-->
+                    </div>
+                    <!--end::Wrapper-->
+                    <!--begin::Close-->
+                    <button type="button" class="position-absolute position-sm-relative m-2 m-sm-0 top-0 end-0 btn btn-icon ms-sm-auto" data-bs-dismiss="alert">
+                        <span class="svg-icon svg-icon-2x svg-icon-light">
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                    <g transform="translate(12.000000, 12.000000) rotate(-45.000000) translate(-12.000000, -12.000000) translate(4.000000, 4.000000)" fill="#000000">
+                                        <rect x="0" y="7" width="16" height="2" rx="1" />
+                                        <rect opacity="0.3" transform="translate(8.000000, 8.000000) rotate(-270.000000) translate(-8.000000, -8.000000) " x="0" y="7" width="16" height="2" rx="1" />
+                                    </g>
+                                </g>
+                            </svg>
+                        </span>
+                    </button>
+                    <!--end::Close-->
+                </div>
+                <!--end::Alert-->
+            </div>
+        </div>
+    </div>
+} else if((string)TempData["status"] == "error"){
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <!--begin::Alert-->
+                <div class="alert alert-dismissible bg-danger d-flex flex-column flex-sm-row p-5 mb-10">
+                    <!--begin::Icon-->
+                    <span class="svg-icon svg-icon-2hx svg-icon-light me-4 mb-5 mb-sm-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                <rect x="0" y="0" width="24" height="24" />
+                                <path d="M4,4 L11.6314229,2.5691082 C11.8750185,2.52343403 12.1249815,2.52343403 12.3685771,2.5691082 L20,4 L20,13.2830094 C20,16.2173861 18.4883464,18.9447835 16,20.5 L12.5299989,22.6687507 C12.2057287,22.8714196 11.7942713,22.8714196 11.4700011,22.6687507 L8,20.5 C5.51165358,18.9447835 4,16.2173861 4,13.2830094 L4,4 Z" fill="#000000" opacity="0.3" />
+                                <path d="M11.1750002,14.75 C10.9354169,14.75 10.6958335,14.6541667 10.5041669,14.4625 L8.58750019,12.5458333 C8.20416686,12.1625 8.20416686,11.5875 8.58750019,11.2041667 C8.97083352,10.8208333 9.59375019,10.8208333 9.92916686,11.2041667 L11.1750002,12.45 L14.3375002,9.2875 C14.7208335,8.90416667 15.2958335,8.90416667 15.6791669,9.2875 C16.0625002,9.67083333 16.0625002,10.2458333 15.6791669,10.6291667 L11.8458335,14.4625 C11.6541669,14.6541667 11.4145835,14.75 11.1750002,14.75 Z" fill="#000000" />
+                            </g>
+                        </svg>
+                    </span>
+                    <!--end::Icon-->
+                    <!--begin::Wrapper-->
+                    <div class="d-flex flex-column text-light pe-0 pe-sm-10">
+                        <!--begin::Title-->
+                        <h4 class="mb-1 text-light">عملیات با خطا رو به رو شد.</h4>
+                        <!--end::Title-->
+                        <!--begin::Content-->
+                        <span>@TempData["message"]</span>
+
+                        <!--end::Content-->
+                    </div>
+                    <!--end::Wrapper-->
+                    <!--begin::Close-->
+                    <button type="button" class="position-absolute position-sm-relative m-2 m-sm-0 top-0 end-0 btn btn-icon ms-sm-auto" data-bs-dismiss="alert">
+                        <span class="svg-icon svg-icon-2x svg-icon-light">
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                    <g transform="translate(12.000000, 12.000000) rotate(-45.000000) translate(-12.000000, -12.000000) translate(4.000000, 4.000000)" fill="#000000">
+                                        <rect x="0" y="7" width="16" height="2" rx="1" />
+                                        <rect opacity="0.3" transform="translate(8.000000, 8.000000) rotate(-270.000000) translate(-8.000000, -8.000000) " x="0" y="7" width="16" height="2" rx="1" />
+                                    </g>
+                                </g>
+                            </svg>
+                        </span>
+                    </button>
+                    <!--end::Close-->
+                </div>
+                <!--end::Alert-->
+            </div>
+        </div>
+    </div>
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title sans-bold-fa">وبسایت ها</span>
+                    <div class="card-toolbar">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-website-modal">
+                            افزودن سایت
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-rounded table-striped border gy-4 gs-7">
+                            <thead>
+                                <tr class="fw-bold fs-6 text-gray-800 border-bottom border-gray-200 text-center sans-bold-fa">
+                                    <th>#</th>
+                                    <th>نام سایت</th>
+                                    <th>آدرس سایت</th>
+                                    <th>دسترسی API</th>
+                                    <th>وضعیت</th>
+                                    <th>عملیات</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var website in Model.WebsitesList)
+                                {
+                                    <tr class="text-center">
+                                        <td>@count</td>
+                                        <td>@website.Name</td>
+                                        <td>@website.Url</td>
+                                        <td>
+                                            @if (website.HasApiAccess)
+                                            {
+                                                <div class="badge badge-light-success">دارد</div>
+                                            } else {
+                                                <div class="badge badge-light-danger">ندارد</div>
+                                            }
+                                        </td>
+                                        <td>
+                                            @if (website.IsActive)
+                                           {
+                                               <div class="badge badge-light-success">فعال</div>
+                                           } else {
+                                               <div class="badge badge-light-danger">غیر فعال</div>
+                                           }
+                                        </td>
+                                        <td>
+                                            <a href="#" class="btn p-0 edit-website-btn" data-bs-toggle="tooltip" data-bs-placement="bottom" title="ویرایش سایت" data-id="@website.Id">
+                                                <span class="svg-icon svg-icon-warning svg-icon-2x" data-bs-toggle="modal" data-bs-target="#edit-website-modal">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                            <rect x="0" y="0" width="24" height="24" />
+                                                            <path d="M8,17.9148182 L8,5.96685884 C8,5.56391781 8.16211443,5.17792052 8.44982609,4.89581508 L10.965708,2.42895648 C11.5426798,1.86322723 12.4640974,1.85620921 13.0496196,2.41308426 L15.5337377,4.77566479 C15.8314604,5.0588212 16,5.45170806 16,5.86258077 L16,17.9148182 C16,18.7432453 15.3284271,19.4148182 14.5,19.4148182 L9.5,19.4148182 C8.67157288,19.4148182 8,18.7432453 8,17.9148182 Z" fill="#000000" fill-rule="nonzero" transform="translate(12.000000, 10.707409) rotate(-135.000000) translate(-12.000000, -10.707409) " />
+                                                            <rect fill="#000000" opacity="0.3" x="5" y="20" width="15" height="2" rx="1" />
+                                                        </g>
+                                                    </svg>
+                                                </span>
+                                            </a>
+                                            <a class="btn p-0 delete-website" data-bs-toggle="tooltip" data-bs-placement="bottom" title="حذف سایت" data-id="@website.Id">
+                                                <span class="svg-icon svg-icon-danger svg-icon-2x">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                            <rect x="0" y="0" width="24" height="24" />
+                                                            <path d="M6,8 L18,8 L17.106535,19.6150447 C17.04642,20.3965405 16.3947578,21 15.6109533,21 L8.38904671,21 C7.60524225,21 6.95358004,20.3965405 6.89346498,19.6150447 L6,8 Z M8,10 L8.45438229,14.0894406 L15.5517885,14.0339036 L16,10 L8,10 Z" fill="#000000" fill-rule="nonzero" />
+                                                            <path d="M14,4.5 L14,3.5 C14,3.22385763 13.7761424,3 13.5,3 L10.5,3 C10.2238576,3 10,3.22385763 10,3.5 L10,4.5 L5.5,4.5 C5.22385763,4.5 5,4.72385763 5,5 L5,5.5 C5,5.77614237 5.22385763,6 5.5,6 L18.5,6 C18.7761424,6 19,5.77614237 19,5.5 L19,5 C19,4.72385763 18.7761424,4.5 18.5,4.5 L14,4.5 Z" fill="#000000" opacity="0.3" />
+                                                        </g>
+                                                    </svg>
+                                                </span>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    count++;
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Add Website Modal Start -->
+
+<div class="modal fade" tabindex="-1" id="add-website-modal">
+    <div class="modal-dialog modal-lg">
+        <form method="post" asp-controller="UserPanel" asp-action="Websites" class="modal-content" id="add-website-form">
+            <div class="modal-header">
+                <h5 class="modal-title">افزودن وبسایت</h5>
+
+                <!--begin::Close-->
+                <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                    <span class="svg-icon svg-icon-primary svg-icon-2x">
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                <g transform="translate(12.000000, 12.000000) rotate(-45.000000) translate(-12.000000, -12.000000) translate(4.000000, 4.000000)" fill="#000000">
+                                    <rect x="0" y="7" width="16" height="2" rx="1" />
+                                    <rect opacity="0.3" transform="translate(8.000000, 8.000000) rotate(-270.000000) translate(-8.000000, -8.000000) " x="0" y="7" width="16" height="2" rx="1" />
+                                </g>
+                            </g>
+                        </svg>
+                    </span>
+                </div>
+                <!--end::Close-->
+            </div>
+
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row fv-row mb-5">
+                        <div class="col-6">
+                            <label for="name" class="required form-label">نام سایت</label>
+                            <input type="text" class="form-control" placeholder="نام سایت" asp-for="@Model.Websites.Name" />
+                        </div>
+                        <div class="col-6">
+                            <label for="url" class="required form-label">آدرس سایت</label>
+                            <input type="url" class="form-control" placeholder="آدرس سایت" asp-for="@Model.Websites.Url" />
+                        </div>
+                    </div>
+                    <div class="row fv-row">
+                        <div class="col-12">
+                            <div class="sans-bold mb-5">
+                                <span>دسترسی Api (اختیاری)</span>
+                                <button type="button" class="btn p-2" data-bs-toggle="popover" data-bs-html="true" title="<span>راهنما</span>" data-bs-content="<span class='sans'>برای ارسال نظر در ووکامرس نیاز به ثبت اطلاعات API سایت می باشد.</span>">
+                                    <span class="svg-icon svg-icon-primary svg-icon-2x">
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                <rect x="0" y="0" width="24" height="24" />
+                                                <circle fill="#000000" opacity="0.3" cx="12" cy="12" r="10" />
+                                                <path d="M12,16 C12.5522847,16 13,16.4477153 13,17 C13,17.5522847 12.5522847,18 12,18 C11.4477153,18 11,17.5522847 11,17 C11,16.4477153 11.4477153,16 12,16 Z M10.591,14.868 L10.591,13.209 L11.851,13.209 C13.447,13.209 14.602,11.991 14.602,10.395 C14.602,8.799 13.447,7.581 11.851,7.581 C10.234,7.581 9.121,8.799 9.121,10.395 L7.336,10.395 C7.336,7.875 9.31,5.922 11.851,5.922 C14.392,5.922 16.387,7.875 16.387,10.395 C16.387,12.915 14.392,14.868 11.851,14.868 L10.591,14.868 Z" fill="#000000" />
+                                            </g>
+                                        </svg>
+                                    </span>
+                                </button>
+                            </div>
+                            <div class="input-group input-group-default mb-5">
+                                <span class="input-group-text" id="inputGroup-sizing-default">کلید مصرف کننده</span>
+                                <input type="text" class="form-control" asp-for="@Model.Websites.CustomerKey" />
+                            </div>
+                            <div class="input-group input-group-default mb-5">
+                                <span class="input-group-text" id="inputGroup-sizing-default">رمز مصرف کننده</span>
+                                <input type="text" class="form-control" asp-for="@Model.Websites.CustomerSecret" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">انصراف</button>
+                <button type="submit" class="btn btn-primary" id="add-website-submit">افزودن سایت</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<!-- Edit Website Modal Start-->
+
+<div class="modal fade" tabindex="-1" id="edit-website-modal">
+    <div class="modal-dialog modal-lg">
+        <div class="spinner-container">
+          <div class="spinner">
+          </div>
+        </div>
+        <form id="editWebsiteForm" class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">ویرایش وبسایت</h5>
+
+                <!--begin::Close-->
+                <div class="btn btn-icon btn-sm btn-active-light-primary ms-2 close" data-bs-dismiss="modal" aria-label="Close">
+                    <span class="svg-icon svg-icon-primary svg-icon-2x">
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                <g transform="translate(12.000000, 12.000000) rotate(-45.000000) translate(-12.000000, -12.000000) translate(4.000000, 4.000000)" fill="#000000">
+                                    <rect x="0" y="7" width="16" height="2" rx="1" />
+                                    <rect opacity="0.3" transform="translate(8.000000, 8.000000) rotate(-270.000000) translate(-8.000000, -8.000000) " x="0" y="7" width="16" height="2" rx="1" />
+                                </g>
+                            </g>
+                        </svg>
+                    </span>
+                </div>
+                <!--end::Close-->
+            </div>
+
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="sans-bold mb-5">
+                                <span>دسترسی Api (اختیاری)</span>
+                                <button type="button" class="btn p-2" data-bs-toggle="popover" data-bs-html="true" title="<span>راهنما</span>" data-bs-content="<span class='sans'>برای ارسال نظر در ووکامرس نیاز به ثبت اطلاعات API سایت می باشد.</span>">
+                                    <span class="svg-icon svg-icon-primary svg-icon-2x">
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                <rect x="0" y="0" width="24" height="24" />
+                                                <circle fill="#000000" opacity="0.3" cx="12" cy="12" r="10" />
+                                                <path d="M12,16 C12.5522847,16 13,16.4477153 13,17 C13,17.5522847 12.5522847,18 12,18 C11.4477153,18 11,17.5522847 11,17 C11,16.4477153 11.4477153,16 12,16 Z M10.591,14.868 L10.591,13.209 L11.851,13.209 C13.447,13.209 14.602,11.991 14.602,10.395 C14.602,8.799 13.447,7.581 11.851,7.581 C10.234,7.581 9.121,8.799 9.121,10.395 L7.336,10.395 C7.336,7.875 9.31,5.922 11.851,5.922 C14.392,5.922 16.387,7.875 16.387,10.395 C16.387,12.915 14.392,14.868 11.851,14.868 L10.591,14.868 Z" fill="#000000" />
+                                            </g>
+                                        </svg>
+                                    </span>
+                                </button>
+                            </div>
+                            <input type="hidden" name="Id" />
+                            <input type="hidden" name="Name" />
+                            <input type="hidden" name="Url" />
+                            <div class="input-group input-group-default mb-5">
+                                <span class="input-group-text" id="inputGroup-sizing-default">کلید مصرف کننده</span>
+                                <input type="text" class="form-control" name="CustomerKey" />
+                            </div>
+                            <div class="input-group input-group-default mb-5">
+                                <span class="input-group-text" id="inputGroup-sizing-default">رمز مصرف کننده</span>
+                                <input type="text" class="form-control" name="CustomerSecret" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">انصراف</button>
+                <button type="button" class="btn btn-primary edit-website-submit" data-id="">ویرایش وبسایت</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Styles {
+    <link href="~/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
+}
+
+@section Scripts {
+
+    <script src="~/assets/plugins/global/plugins.bundle.js"></script>
+    <script src="~/assets/js/views/user-panel/websites.js"></script>
+
+}

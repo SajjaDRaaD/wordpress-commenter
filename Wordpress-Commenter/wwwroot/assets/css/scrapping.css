@@ -1,0 +1,12 @@
+﻿.link-validation-info strong, .link-validation-info span {
+    width:40%;
+    display:inline-block;
+    padding:8px;
+}
+
+.link-validation-info {
+    border: 1px solid #ededed;
+    border-radius: 5px;
+    padding: 15px;
+    background: #f9f9f9;
+}
